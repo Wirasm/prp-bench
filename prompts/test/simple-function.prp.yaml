@@ -1,0 +1,25 @@
+name: "Test: Simple Function"
+description: "Create a simple Python function with a test"
+type: "feature"
+complexity: "simple"
+tags: ["test", "python", "simple"]
+
+meta:
+  expected_duration: "2m"
+  expected_loc: 20
+  validation_required: true
+
+prompt: |
+  Create a Python function that adds two numbers together.
+  
+  Requirements:
+  - Function named `add_numbers` in a file called `math_utils.py`
+  - Takes two parameters and returns their sum
+  - Include a simple test file `test_math_utils.py` with 2-3 test cases
+  - Add a docstring to the function
+
+validation:
+  syntax:
+    - "ruff check ."
+  tests:
+    - "python -m pytest test_math_utils.py -v"

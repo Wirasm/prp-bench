@@ -1,0 +1,125 @@
+[project]
+name = "prp-bench"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Rasmus Widing", email = "rasmus.widing@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "anthropic>=0.18.0",
+    "click>=8.1.0",
+    "fastapi>=0.116.1",
+    "httpx>=0.28.1",
+    "pydantic>=2.0.0",
+    "pytest>=8.4.1",
+    "pyyaml>=6.0",
+    "rich>=13.0.0",
+    "uvicorn>=0.35.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0.0",
+]
+
+[project.scripts]
+prp-bench = "prp_bench.main:main"
+prp-bench-simple = "prp_bench.simple_cli:main"
+prp-bench-multi = "prp_bench.multi_cli:main"
+prp-bench-cleanup = "prp_bench.multi_cli:cleanup"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "mypy>=1.16.1",
+    "pytest>=8.4.1",
+    "ruff>=0.12.3",
+    "types-pyyaml>=6.0.12.20250516",
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+exclude = [
+    ".git",
+    ".venv",
+    "__pycache__",
+    "build",
+    "dist",
+    "tmp",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",     # pycodestyle errors
+    "W",     # pycodestyle warnings
+    "F",     # pyflakes
+    "I",     # isort
+    "UP",    # pyupgrade
+    "B",     # flake8-bugbear
+    "C4",    # flake8-comprehensions
+    "PIE",   # flake8-pie
+    "SIM",   # flake8-simplify
+    "TCH",   # flake8-type-checking
+    "PTH",   # flake8-use-pathlib
+    "ERA",   # eradicate
+    "PL",    # pylint
+    "RUF",   # ruff-specific
+]
+ignore = [
+    "E501",     # line too long (handled by formatter)
+    "PLR0913",  # too many arguments
+    "PLR2004",  # magic value used in comparison
+    "PLC0415",  # import should be at top level (conflicts with lazy imports)
+    "S101",     # use of assert (fine in tests)
+    "D103",     # missing docstring in public function (too noisy)
+    "D107",     # missing docstring in __init__ (too noisy)
+    "ANN204",   # missing return type for __init__ (not needed)
+    "T201",     # print found (sometimes needed for CLI output)
+]
+
+[tool.ruff.lint.per-file-ignores]
+"test_*.py" = ["S101", "PLR2004"]  # Allow asserts and magic values in tests
+"tmp/**" = ["ALL"]  # Ignore all rules in tmp directory
+"*_cli.py" = ["PLR0912", "PLR0915"]  # CLI functions naturally have many branches/statements
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.isort]
+known-first-party = ["prp_bench"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+show_error_codes = true
+
+[[tool.mypy.overrides]]
+module = [
+    "yaml.*",
+]
+ignore_missing_imports = true

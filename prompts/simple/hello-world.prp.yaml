@@ -1,0 +1,25 @@
+name: "Simple: Hello World API"
+description: "Create a simple hello world REST API endpoint"
+type: "feature"
+complexity: "simple"
+tags: ["api", "simple", "starter"]
+
+meta:
+  expected_duration: "5m"
+  expected_loc: 50
+  validation_required: true
+
+prompt: |
+  Create a simple REST API with a single endpoint that returns "Hello, World!".
+  
+  Requirements:
+  - GET endpoint at /hello
+  - Returns JSON: {"message": "Hello, World!"}
+  - Use FastAPI framework
+  - Include a simple test
+
+validation:
+  syntax:
+    - "ruff check ."
+  tests:
+    - "pytest test_hello.py -v"

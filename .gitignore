@@ -1,0 +1,61 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+.env
+
+# IDE and editor files
+.vscode/
+.zed/settings.json
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Claude Code local settings
+.claude/
+
+# Cache directories
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+
+# PRP-Bench specific files
+tmp/
+test_results.json
+*-results.json
+*-comparison.json
+
+# Log files
+*.log
+logs/
+
+# Development and test artifacts
+*.pyc
+.coverage
+htmlcov/
+.tox/
+.pytest_cache/
+
+# UV lock file (debatable - usually should be committed)
+# uv.lock
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# pyenv python version file (might want to keep for reproducibility)
+# .python-version

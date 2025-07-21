@@ -1,0 +1,37 @@
+name: "Medium: Todo List API"
+description: "Create a simple TODO list REST API with basic CRUD operations"
+type: "feature"
+complexity: "medium"
+tags: ["api", "crud", "fastapi"]
+
+meta:
+  expected_duration: "15m"
+  expected_loc: 150
+  validation_required: true
+
+prompt: |
+  Create a simple TODO list REST API using FastAPI with the following endpoints:
+  
+  Requirements:
+  - GET /todos - List all todos
+  - GET /todos/{id} - Get a specific todo
+  - POST /todos - Create a new todo
+  - PUT /todos/{id} - Update a todo
+  - DELETE /todos/{id} - Delete a todo
+  
+  Todo model should have:
+  - id (auto-generated)
+  - title (string, required)
+  - description (string, optional)
+  - completed (boolean, default false)
+  - created_at (datetime)
+  
+  Use in-memory storage (a list) for simplicity.
+  Include basic error handling for not found items.
+  Create a test file with at least 3 test cases.
+
+validation:
+  syntax:
+    - "ruff check ."
+  tests:
+    - "python -m pytest test_todo_api.py -v"
