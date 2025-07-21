@@ -9,10 +9,12 @@ authors = [
 requires-python = ">=3.12"
 dependencies = [
     "anthropic>=0.18.0",
+    "claude-code-sdk>=0.0.14",
     "click>=8.1.0",
     "fastapi>=0.116.1",
     "httpx>=0.28.1",
     "pydantic>=2.0.0",
+    "pydantic-settings>=2.10.1",
     "pytest>=8.4.1",
     "pyyaml>=6.0",
     "rich>=13.0.0",
@@ -27,10 +29,7 @@ dev = [
 ]
 
 [project.scripts]
-prp-bench = "prp_bench.main:main"
-prp-bench-simple = "prp_bench.simple_cli:main"
-prp-bench-multi = "prp_bench.multi_cli:main"
-prp-bench-cleanup = "prp_bench.multi_cli:cleanup"
+prp-bench = "prp_bench.main:main_sdk"
 
 [build-system]
 requires = ["hatchling"]
@@ -40,6 +39,8 @@ build-backend = "hatchling.build"
 dev = [
     "mypy>=1.16.1",
     "pytest>=8.4.1",
+    "pytest-asyncio>=1.1.0",
+    "pytest-mock>=3.14.1",
     "ruff>=0.12.3",
     "types-pyyaml>=6.0.12.20250516",
 ]
@@ -89,6 +90,7 @@ ignore = [
 "test_*.py" = ["S101", "PLR2004"]  # Allow asserts and magic values in tests
 "tmp/**" = ["ALL"]  # Ignore all rules in tmp directory
 "*_cli.py" = ["PLR0912", "PLR0915"]  # CLI functions naturally have many branches/statements
+"main.py" = ["PLR0912", "PLR0915"]  # Main CLI functions have complex logic
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"

@@ -67,6 +67,19 @@ class ExpectedOutcomes(BaseModel):
     capabilities: list[str] = Field(default_factory=list)
 
 
+class LLMExtractionResult(BaseModel):
+    """Result of LLM metadata extraction from prompt text."""
+
+    task_type: str = Field(..., description="Detected task type")
+    complexity: str = Field(..., description="Estimated complexity")
+    estimated_duration: str = Field(default="5m", description="Estimated duration")
+    suggested_name: str = Field(default="", description="Suggested prompt name")
+    suggested_description: str = Field(default="", description="One-line description")
+    tags: list[str] = Field(default_factory=list, description="Relevant tags")
+    confidence_score: float = Field(default=0.8, description="Extraction confidence")
+    needs_human_review: bool = Field(default=False, description="Low confidence flag")
+
+
 class PromptMetadata(BaseModel):
     """Metadata for benchmarking."""
 
@@ -79,17 +92,26 @@ class Prompt(BaseModel):
     """A prompt to execute."""
 
     prompt_id: UUID = Field(default_factory=uuid4)
-    name: str
-    description: str
-    type: PromptType
-    complexity: ComplexityLevel
+    name: str = Field(default="", description="Prompt name - will be generated if empty")
+    description: str = Field(default="", description="Prompt description")
+    type: PromptType = Field(default=PromptType.FEATURE, description="Prompt type")
+    complexity: ComplexityLevel = Field(
+        default=ComplexityLevel.SIMPLE, description="Complexity level"
+    )
     tags: list[str] = Field(default_factory=list)
-    meta: PromptMetadata
+    meta: PromptMetadata = Field(default_factory=PromptMetadata)
     prompt: str
     context: PromptContext | None = None
     validation: PromptValidation | None = None
     expected_outcomes: ExpectedOutcomes | None = None
     source_file: Path | None = None
+
+    # LLM-specific fields
+    extracted_by_llm: bool = Field(default=False, description="Metadata extracted by LLM")
+    extraction_confidence: float = Field(default=1.0, description="LLM confidence score")
+    extraction_model: str | None = Field(default=None, description="Model used for extraction")
+    fallback_applied: bool = Field(default=False, description="Whether fallback defaults used")
+    original_format: str = Field(default="text", description="Original input format")
 
 
 class ResourceMetrics(BaseModel):
